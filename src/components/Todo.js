@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 
 const Todo = props => {
-  const handleClick = () => {
-    props.handleToggleItem(props.item);
-  }
+    const handleClick = () => {
+        props.handleToggle(props.item);
+    }
 
-  return (
-    <div onClick={handleClick} className={`item${props.item.completed ? 'completed' : ''}`}>
-      <p>{props.item.task}</p>
-    </div>
-  );
+    return (
+        <div onClick={handleClick} className={`item${props.item.completed ? ' completed' : ''}`}>
+          <p>{props.item.name}</p>
+        </div>
+    );
 };
 
 export default Todo;

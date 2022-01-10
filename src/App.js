@@ -22,34 +22,20 @@ class App extends React.Component {
     super();
     this.state = {
       todoList: todoList
-    };
+    }
   }
 
-  //Toggle Clear Purchased
-  handleClearPurchased = () => {
-    //1. Capture our click
-    //2. Change our state setState
-    //3. Retain our previous state.
-    //4. change groceries: remove all items where purchased == true
-
+  handleClear = () => {
     this.setState({
       ...this.state,
-      groceries: this.state.todoList.filter(item => {
-        return !item.purchased;
-      })
+      todoList: this.state.todoList.filter(item => !item.completed)
     });
   }
 
-  //Add Item
-  handleAddItem = (itemName)=> {
-    //1. Capture our click
-    //2. change our state
-    //3. retain previous state
-    //4. change groceries: add to groceries an new groceries
-
+  handleAddItems = (item) => {
     const newItem = {
-      name:itemName,
-      id: Date.now(),
+      name: item,
+      id: Date.now,
       completed: false
     };
 
@@ -59,43 +45,42 @@ class App extends React.Component {
     });
   }
 
-  //Toggle Purchased
-  handleToggleItem = (selectedItem) => {
-    //1. Capture our click
-    //2. change our state
-    //3. retain previous state
-    //4. change groceries: find the item we clicked toggle purchased
-
+  handleToggle = (item) => {
     this.setState({
       ...this.state,
-      groceries: this.state.todoList.map(item => {
-        if(item.id === selectedItem.id) {
-          return({
-            ...item,
-            completed: !item.completed
+      todoList: this.state.todoList.map(list => {
+        if(list.id === item.id){
+          return ({
+            ...list,
+            completed: !list.completed
           })
-        } else {
-          return item;
         }
-        
+        return list;
       })
-    });
+    })
   }
 
-  // Class methods to update state
   render() {
     return (
-      <div className="App">
-        <div className="header">
-           <h1>Shopping List</h1>
-           <TodoForm handleAddItem={this.handleAddItem}/>
-         </div>
-        <TodoList handleToggleItem={this.handleToggleItem} todoList={this.state.todoList} />
-        <button onClick={this.handleClearPurchased}className="clear-btn">Clear Purchased</button>
-       </div>
+      <div className='App'>
+        <div className='header'>
+          <h1>My Todo todoList</h1>
+          <TodoForm handleAddItems={this.handleAddItems}/>
+        </div>
+        <TodoList 
+          handleClear={this.handleClear}
+          handleToggle={this.handleToggle}
+          todoList={this.state.todoList}
+        />
+        <button 
+          onClick={this.handleClear} 
+          className='clear-btn'
+        >Clear</button>
+      </div>
     );
   }
 }
 
+export default App;
 const rootElement = document.getElementById('root');
-ReactDOM.render(<App />, rootElement);
+  ReactDOM.render(<App />, rootElement);
